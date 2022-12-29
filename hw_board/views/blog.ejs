@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+  <title>my blog posting list</title>
+  <%- include('./include/head')%>
+  <link rel="stylesheet" href="/css/blog.css">
+</head>
+
+<body>
+  <%- include('./include/header')%>
+
+  <h2 class="title">글 목록</h2>
+  <h4 class="count_content">총 포스팅 개수 <%= blogCount%></h4>
+
+
+  <ul>
+    <%if(blogCount>0){%>
+    <%for(let i=0; i<blogCount;i++){%>
+    <li>
+      <h3>No.<%=i+1%></h3>
+      <p><span>제목</span> <%=BLOG[i].title%></p>
+      <p><span>내용</span> <%=BLOG[i].content%></p>
+      <br>
+      <a href="#" class="del_btn" onclick="deletePost('<%= BLOG[i].title%>')">삭제</a>
+      <a href="/blog/modi/<%= BLOG[i].title%>" class="update_btn">수정</a>
+    </li>
+    <%}%>
+    <%} else{%>
+    <li> 등록된 글이 없습니다!!</li>
+    <%}%>
+  </ul>
+  
+  <h2 class="title new_content">새 글 쓰기</h2>
+  
+  <form action="/blog" method="POST">
+    <input type="text" name="title" placeholder="제목을 입력하세요" class="input_title">
+    <textarea name="content" placeholder=" 내용을 입력해주세요 :)"></textarea>
+    <input type="submit" value="등록" class="submit">
+  </form>
+</body>
+<script>
+  function deletePost(title){
+    fetch(`/blog/${title}`,{
+      method:'delete',
+      headers:{
+        'Content-Type':'application/json'
+      }
+    }).then((res)=>{
+      location.reload();
+    })
+  }
+</script>
+</html>

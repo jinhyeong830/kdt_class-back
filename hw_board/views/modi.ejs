@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+  <title>글 수정하기</title>
+  <%- include('./include/head')%>
+  <link rel="stylesheet" href="/css/modi_posting.css">
+</head>
+
+<body>
+  <%- include('./include/header')%>
+  <h2 class="title"> edit !</h2>
+  <form action="/blog" method="POST">
+
+    <input type="text" name="modi_title" value="<%= BLOG[index].title%>" class="modi_input_title">
+    <textarea name="modi_content"><%=BLOG[index].content%></textarea>
+    <input type="submit" value="수정하기" class="submit">
+  </form>
+</body>
+
+
+</html>

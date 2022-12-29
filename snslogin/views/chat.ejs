@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>chatting service!~</title>
+</head>
+
+<body>
+  <input type="text" id="msg">
+  <a href="javascript:void(0)" onclick="send();">전송</a>
+  <ol id="chat">
+
+  </ol>
+</body>
+<script>
+  let ws = new WebSocket("ws://localhost:8080"); // 8080 포트는 웹소켓이 점령한다.
+
+  const inputEl = document.getElementById('msg');
+  const chat = document.getElementById('chat');
+
+  function send() {
+    // input으로부터 어떤 내용이 들어왔는지..
+    const msg = inputEl.value;
+    ws.send(msg); // websocket에 담아서 서버로 보내주기 
+    inputEl.value = '';
+  }
+
+  //   server에서 메세지가 날아오면 날아온 메시지를 모든 클라이언트에게 보여주기 위한 코드.
+  ws.onmessage = (event) => {
+    const msgEl = document.createElement('li');
+    msgEl.innerHTML = event.data;
+    chat.appendChild(msgEl);
+  }
+  /* 
+    ws.onopen = (event) => {
+      ws.send('저는 클라이언트에요. 안녕하세욧');
+    }
+    ws.onmessage = (event) => {
+      console.log('server가 말해따', event.data);
+    } // server로 부터 온 메세지를 받아주는 역할
+    ws.onerror = (event) => {
+      console.log('error');
+    } */
+</script>
+
+</html>

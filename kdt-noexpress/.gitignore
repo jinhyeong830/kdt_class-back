@@ -1,0 +1,11 @@
+# 폴더
+.vscode/
+node_modules/
+
+
+# 파일
+*.json
+.prettierrc
+.eslintrc.js
+dd.js
+*.txt
